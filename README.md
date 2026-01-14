@@ -140,8 +140,8 @@ openssl speed aes
 ## **7. Compare Multiple Operations**
 
 ```bash
-time for i in {1..1000}; do openssl rsautl -decrypt -inkey private.pem -in message_enc.txt -out /dev/null; done
-time for i in {1..1000}; do  openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -out /dev/null -pass file:aes.key; done
+time for i in {1..1000}; do openssl rsautl -decrypt -inkey private.pem -in message_enc.txt > /dev/null; done
+time for i in {1..1000}; do  openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -pass file:aes.key > /dev/null; done
 ```
 
 ## **8. Observations**
