@@ -45,13 +45,13 @@ openssl rsa -in private.pem -pubout -out public.pem
 ### Encrypt using public key
 
 ```bash
-time openssl rsautl -encrypt -inkey public.pem -pubin -in message.txt -out message_enc.txt
+time openssl pkeyutl -encrypt -inkey public.pem -pubin -in message.txt -out message_enc.txt
 ```
 
 ### Decrypt using private key
 
 ```bash
-time openssl rsautl -decrypt -inkey private.pem -in message_enc.txt -out message_dec.txt
+time openssl pkeyutl -decrypt -inkey private.pem -in message_enc.txt -out message_dec.txt
 ```
 
 Verify:
@@ -93,7 +93,7 @@ To get meaningful timing results, each operation is repeated many times.
 
 ```bash
 time for i in {1..1000}; do
-  openssl rsautl -encrypt -inkey public.pem -pubin -in message.txt -out /dev/null
+  openssl pkeyutl -encrypt -inkey public.pem -pubin -in message.txt -out /dev/null
 done
 ```
 
@@ -101,7 +101,7 @@ done
 
 ```bash
 time for i in {1..1000}; do
-  openssl rsautl -decrypt -inkey private.pem -in message_enc.txt -out /dev/null
+  openssl pkeyutl -decrypt -inkey private.pem -in message_enc.txt -out /dev/null
 done
 ```
 
@@ -140,8 +140,8 @@ openssl speed aes
 ## **7. Compare Multiple Operations**
 
 ```bash
-time for i in {1..1000}; do openssl rsautl -decrypt -inkey private.pem -in message_enc.txt > /dev/null; done
-time for i in {1..1000}; do  openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -pass file:aes.key > /dev/null; done
+time for i in {1..1000}; do openssl pkeyutl -encrypt -inkey public.pem -pubin -in message.txt -out message_enc.txt > /dev/null; done
+time for i in {1..1000}; do  openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -out message_aes.enc -pass file:aes.key > /dev/null; done
 ```
 
 ## **8. Observations**
