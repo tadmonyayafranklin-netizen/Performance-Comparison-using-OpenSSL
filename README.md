@@ -105,10 +105,10 @@ time for i in {1..1000}; do
 done
 ```
 
-### AES Encryption (100,000 times)
+### AES Encryption (1000 times)
 
 ```bash
-time for i in {1..100000}; do
+time for i in {1..1000}; do
   openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -out /dev/null -pass file:aes.key
 done
 ```
@@ -137,7 +137,14 @@ openssl speed aes
 
 ---
 
-## **7. Observations**
+## **7. Compare Multiple Operations**
+
+```bash
+time for i in {1..1000}; do openssl rsautl -decrypt -inkey private.pem -in message_enc.txt -out /dev/null; done
+time for i in {1..1000}; do  openssl enc -aes-128-cbc -pbkdf2 -salt -in message.txt -out /dev/null -pass file:aes.key; done
+```
+
+## **8. Observations**
 
 * RSA encryption is much slower than AES.
 * RSA decryption is even slower than RSA encryption.
@@ -146,7 +153,7 @@ openssl speed aes
 
 ---
 
-## **8. Conclusion**
+## **9. Conclusion**
 
 This experiment demonstrates why hybrid encryption is used in practice:
 
